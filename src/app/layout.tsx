@@ -1,6 +1,7 @@
-import GlobalState from "./context/index";
+import GlobalState from "../context/index";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import NextAuthProvider from "@/auth-provider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <GlobalState>{children}</GlobalState>
+        <NextAuthProvider>
+          <GlobalState>{children}</GlobalState>
+        </NextAuthProvider>
       </body>
     </html>
   );
