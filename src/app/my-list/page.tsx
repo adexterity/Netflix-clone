@@ -7,5 +7,5 @@ export default function Browse(){
     const { data: session } = useSession();
   console.log(session);
   if (!session) return <Unauth />;
-    return <div>browse component </div>
+    return <div>my list </div>
 }

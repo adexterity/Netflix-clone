@@ -1,3 +1,5 @@
+import { signIn } from "next-auth/react";
+
 export default function Unauth(){
-    return <button>sign in</button>
+    return <button onClick={()=>signIn('github')}>sign in</button>
 }
