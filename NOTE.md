@@ -48,4 +48,10 @@ STAGES OF APP DEVELOPMENT
         This route defines a serverless function to handle HTTP GET requests. It connects to a database, retrieves account information based on provided parameters (account ID, user ID, and PIN), securely compares the provided PIN with the stored PIN in the database, and returns a JSON response indicating success or failure based on the comparison. If the account is not found or an error occurs during the process, it returns a JSON response indicating failure.
         - remove-account route:
         This route defines a serverless function to handle HTTP DELETE requests. It connects to a database, extracts the 'id' parameter from the request URL, deletes the account with that id from the database, and returns a JSON response indicating success or failure. If the 'id' parameter is missing, it returns a JSON response indicating failure. If an error occurs during the process, it logs the error and returns a JSON response indicating failure.
+    
+    - Update the manage-account: src\components\manage-accounts\index.tsx
+    This code defines a React component that fetches and displays user accounts from an API based on the logged-in user's session. It uses React hooks to manage state and side effects, and displays a list of accounts with an option to add more accounts if fewer than four exist.
 
+    - create the manage-account directory inside the component directory.
+        - in the index.ts file, create the login that will be called when the user submit the form to create new account, and also display the already created accounts.
+        - create the accountform component: this component is the login form that the user will fill to create new account.
