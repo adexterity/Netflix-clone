@@ -4,6 +4,8 @@ import connectToDB from '@/database'
 // Importing the Account model from the "@/models/Account" module
 import Account from '@/models/Account'
 
+import { compare } from 'bcryptjs';
+
 // Importing the NextResponse object from the 'next/server' module
 import { NextResponse } from 'next/server'
 
@@ -11,7 +13,7 @@ import { NextResponse } from 'next/server'
 export const dynamic = 'force-dynamic'
 
 // Defining an asynchronous function named GET that handles HTTP GET requests
-export async function GET(req){
+export async function POST(req){
 
     try {
         // Establishing a connection to the database
