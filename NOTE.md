@@ -55,3 +55,5 @@ STAGES OF APP DEVELOPMENT
     - create the manage-account directory inside the component directory.
         - in the index.ts file, create the login that will be called when the user submit the form to create new account, and also display the already created accounts.
         - create the accountform component: this component is the login form that the user will fill to create new account.
+
+- create the pin-container component that takes somes props and displays when any of the account is clicked. it ask for user pin and compare it against the stored pin of the user. if the pin matches, it redirect to the browse page for the specific user.
