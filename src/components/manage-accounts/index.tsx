@@ -127,8 +127,8 @@ async function handlePinSubmit(value, index){
   }
 }
 
-  console.log(pageLoader, "pageloader");
-
+/*   console.log(pageLoader, "pageloader");
+ */
   if (pageLoader) return <CircleLoader />;
   // Rendering JSX for the ManageAccounts component
   return (

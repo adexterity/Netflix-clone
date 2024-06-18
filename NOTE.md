@@ -59,3 +59,4 @@ STAGES OF APP DEVELOPMENT
 - create the pin-container component that takes somes props and displays when any of the account is clicked. it ask for user pin and compare it against the stored pin of the user. if the pin matches, it redirect to the browse page for the specific user.
 
 - create the common-layout directory that involves the nav-bar, banner and the movie tiles.
+    - create the search component in the navbar directory
