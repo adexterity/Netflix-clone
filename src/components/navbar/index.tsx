@@ -106,6 +106,12 @@ export default function Navbar() {
               <li
                 className="cursor-pointer text-[16px] font-light text-[#e5e5e5] transition duration-[.4s] hover:text-[#b3b3b3]"
                 key={item.id}
+                onClick={() => {
+                  setPageLoader(true);
+                  router.push(item.path);
+                  setSearchQuery("");
+                  setShowSearchBar(false);
+                }}
               >
                 {item.title}
               </li>

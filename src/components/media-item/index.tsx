@@ -7,10 +7,13 @@ import {
   ChevronDownIcon,
   CheckIcon,
 } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 
 const baseUrl = "https://image.tmdb.org/t/p/w500";
 
+
 export default function MediaItem({ media, title }) {
+    const router = useRouter()
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.5 }}
@@ -25,8 +28,11 @@ export default function MediaItem({ media, title }) {
         <Image
           src={`${baseUrl}${media?.backdrop_path || media?.poster_path}`}
           alt="Media"
-          layout="fill"
+          fill
           className="rounded sm object-cover md:rounded hover:rounded-sm"
+          onClick={()=> {
+            router.push(`/watch/${media?.type}/${media?.id}`)
+          }}
         />
         <div className="space-x-3 hidden absolute p-2 bottom-0 buttonWrapper">
           <button className="cursor-pointer border flex p-2 items-center gap-x-2 rounded-full  text-sm font-semibold transition hover:opacity-90 border-white   bg-black opacity-75 text-black">
