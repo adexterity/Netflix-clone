@@ -14,11 +14,17 @@ export const getTrendingMedias = async (type: stringType) => {
         method: "GET",
       }
     );
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
     const data = await res.json();
     console.log(data, "trending");
     return data && data.results;
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.log("failed to fetch tmdb data:", error);
+    if (error.message === "Request timed out") {
+      console.error("network timedout: ", error);
+    }
   }
 };
 export const getTopratedMedias = async (type: stringType) => {
@@ -29,11 +35,17 @@ export const getTopratedMedias = async (type: stringType) => {
         method: "GET",
       }
     );
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
     const data = await res.json();
     console.log(data, "toprated");
     return data && data.results;
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log("failed to fetch tmdb data:", error);
+    if (error.message === "Request timed out") {
+      console.error("network timedout: ", error);
+    }
   }
 };
 export const getPopularMedias = async (type: stringType) => {
@@ -44,11 +56,18 @@ export const getPopularMedias = async (type: stringType) => {
         method: "GET",
       }
     );
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
     const data = await res.json();
     console.log(data, "popular");
     return data && data.results;
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log("failed to fetch tmdb data:", error);
+    if (error.message === "Request timed out") {
+      console.error("network timedout: ", error);
+    }
   }
 };
 export const getTVorMoviesByGenre = async (
@@ -71,6 +90,9 @@ export const getTVorMoviesByGenre = async (
     return data && data.results;
   } catch (error) {
     console.log("failed to fetch tmdb data:", error);
+    if (error.message === "Request timed out") {
+      console.error("network timedout: ", error);
+    }
   }
 };
 
@@ -82,12 +104,17 @@ export const getTVorMovieVideosByID = async (type, id) => {
         method: "GET",
       }
     );
-
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
     const data = await res.json();
 
     return data;
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log("failed to fetch tmdb data:", error);
+    if (error.message === "Request timed out") {
+      console.error("network timedout: ", error);
+    }
   }
 };
 
@@ -109,5 +136,32 @@ export const getTVorMovieDetailsByID = async (type, id) => {
     return data;
   } catch (error) {
     console.log("failed to fetch tmdb data:", error);
+    if (error.message === "Request timed out") {
+      console.error("network timedout: ", error);
+    }
+  }
+};
+
+export const getTVorMovieSearchResult = async (type, query) => {
+  try {
+    const res = await fetch(
+      `${BASE_URL}/search/${type}?api_key=${API_KEY}&include_adult=true&language=en-US&query=${query}`,
+      {
+        method: "GET",
+      }
+    );
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    const data = await res.json();
+
+    console.log(data);
+
+    return data;
+  } catch (error) {
+    console.log("failed to fetch tmdb data:", error);
+    if (error.message === "Request timed out") {
+      console.error("network timedout: ", error);
+    }
   }
 };

@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 const baseUrl = "https://image.tmdb.org/t/p/w500";
 
 
-export default function MediaItem({ media, title }) {
+export default function MediaItem({ media, searchView = false }) {
     const router = useRouter()
   return (
     <motion.div

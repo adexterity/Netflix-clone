@@ -7,6 +7,7 @@ import Unauth from "@/components/unauth-page";
 import { GlobalContext } from "@/context";
 import { getTVorMoviesByGenre } from "@/utils";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import { useContext, useEffect } from "react";
 
 export default function Tv() {
@@ -21,6 +22,7 @@ export default function Tv() {
 
   const { data: session } = useSession();
   console.log(session);
+
 
   useEffect(() => {
     async function getAllMedias() {
@@ -87,7 +89,7 @@ export default function Tv() {
         }))
       );
 
-      setPageLoader(false)
+      setPageLoader(false);
     }
 
     getAllMedias();
@@ -96,7 +98,6 @@ export default function Tv() {
   if (!session) return <Unauth />;
   // if there is no logged in account, return the Account page
   if (loggedInAccount === null) return <ManageAccounts />;
-
 
   if (pageLoader) return <CircleLoader />;
 
