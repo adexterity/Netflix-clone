@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@heroicons/react": "^2.1.3",
+    "@mui/material": "^5.15.20",
     "@tailwindcss/line-clamp": "^0.4.4",
     "bcryptjs": "^2.4.3",
     "framer-motion": "^11.0.28",

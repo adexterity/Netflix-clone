@@ -8,11 +8,15 @@ import {
   CheckIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
+import { useContext, useState } from "react";
+import { GlobalContext } from "@/context";
 
 const baseUrl = "https://image.tmdb.org/t/p/w500";
 
 
-export default function MediaItem({ media, searchView = false }) {
+export default function MediaItem({ media, searchView = false, similarMovieView= false }) {
+  const {setcurrentMediaInfoIdandType, setShowDetailsPopup} = useContext(GlobalContext)
+  
     const router = useRouter()
   return (
     <motion.div
@@ -38,8 +42,14 @@ export default function MediaItem({ media, searchView = false }) {
           <button className="cursor-pointer border flex p-2 items-center gap-x-2 rounded-full  text-sm font-semibold transition hover:opacity-90 border-white   bg-black opacity-75 text-black">
             <CheckIcon color="#ffffff" className="h-7 w-7" />
           </button>
-          <button className="cursor-pointer p-2 border flex items-center gap-x-2 rounded-full  text-sm font-semibold transition hover:opacity-90  border-white  bg-black opacity-75 ">
-            <ChevronDownIcon color="#fffffff" className="h-7 w-7" />
+          <button onClick={()=>{
+            setShowDetailsPopup(true)
+            setcurrentMediaInfoIdandType({
+              type: media?.type,
+              id: media?.id
+            })
+          }} className="cursor-pointer p-2 border flex items-center gap-x-2 rounded-full  text-sm font-semibold transition hover:opacity-90  border-white  bg-black opacity-75 ">
+            <ChevronDownIcon color="#fffffff" className="h-7 w-7"  />
           </button>
         </div>
       </div>

@@ -8,6 +8,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { GlobalContext } from "@/context";
 import AccountPopup from "./accountPopup";
 import Account from "@/models/Account";
+import DetailsPopup from "../details-popup";
 
 export default function Navbar() {
   const { data: session } = useSession();
@@ -24,6 +25,8 @@ export default function Navbar() {
     setLoggedInAccount,
     accounts,
     setAccounts,
+    showDetailsPopup,
+    setShowDetailsPopup
   } = useContext(GlobalContext);
   const menuItems = [
     {
@@ -154,6 +157,7 @@ export default function Navbar() {
           </div>
         </div>
       </header>
+      <DetailsPopup show={showDetailsPopup } setShow={setShowDetailsPopup}/>
       {showAccountPopup && (
         <AccountPopup
           accounts={accounts}

@@ -118,6 +118,31 @@ export const getTVorMovieVideosByID = async (type, id) => {
   }
 };
 
+export const getTVorMovieSearchResult = async (type, query) => {
+  try {
+    const res = await fetch(
+      `${BASE_URL}/search/${type}?api_key=${API_KEY}&include_adult=true&language=en-US&query=${query}`,
+      {
+        method: "GET",
+      }
+    );
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    const data = await res.json();
+
+    console.log(data);
+
+    return data;
+  } catch (error) {
+    console.log("failed to fetch tmdb data:", error);
+    if (error.message === "Request timed out") {
+      console.error("network timedout: ", error);
+    }
+  }
+};
+
+
 export const getTVorMovieDetailsByID = async (type, id) => {
   try {
     const res = await fetch(
@@ -142,10 +167,12 @@ export const getTVorMovieDetailsByID = async (type, id) => {
   }
 };
 
-export const getTVorMovieSearchResult = async (type, query) => {
+
+
+export const getSimilarTVorMovies = async (type, id) => {
   try {
     const res = await fetch(
-      `${BASE_URL}/search/${type}?api_key=${API_KEY}&include_adult=true&language=en-US&query=${query}`,
+      `${BASE_URL}/${type}/${id}/similar?api_key=${API_KEY}&language=en-US`,
       {
         method: "GET",
       }
@@ -157,7 +184,7 @@ export const getTVorMovieSearchResult = async (type, query) => {
 
     console.log(data);
 
-    return data;
+    return data && data.results;
   } catch (error) {
     console.log("failed to fetch tmdb data:", error);
     if (error.message === "Request timed out") {
