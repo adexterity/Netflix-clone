@@ -4,11 +4,16 @@ import MuiModal from "@mui/material/Modal";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { GlobalContext } from "@/context";
 import { useContext, useEffect, useState } from "react";
-import { getSimilarTVorMovies, getTVorMovieDetailsByID } from "@/utils";
+import {
+  getAllFavorites,
+  getSimilarTVorMovies,
+  getTVorMovieDetailsByID,
+} from "@/utils";
 import ReactPlayer from "react-player";
 import MediaItem from "../media-item";
 import { AiFillPlayCircle } from "react-icons/ai";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function DetailsPopup({ show, setShow }) {
   const {
@@ -21,12 +26,9 @@ export default function DetailsPopup({ show, setShow }) {
     loggedInAccount,
   } = useContext(GlobalContext);
   const [key, setKey] = useState("");
-  const router = useRouter()
+  const router = useRouter();
+  const { data: session } = useSession();
 
-  console.log(currentMediaInfoIdAndType, "detailpopup component");
-
-  /*   console.log(type, id, "currentMediaInfoIdAndType");
-   */
   useEffect(() => {
     if (currentMediaInfoIdAndType !== null) {
       const getMediaDetails = async () => {
@@ -37,6 +39,11 @@ export default function DetailsPopup({ show, setShow }) {
         const extractSimilarMedia = await getSimilarTVorMovies(
           currentMediaInfoIdAndType.type,
           currentMediaInfoIdAndType.id
+        );
+
+        const allFavorites = await getAllFavorites(
+          session?.user?.uid,
+          loggedInAccount?._id
         );
 
         const findIndexOfTrailer =
@@ -66,7 +73,10 @@ export default function DetailsPopup({ show, setShow }) {
           extractSimilarMedia.map((item) => ({
             ...item,
             type: currentMediaInfoIdAndType.type === "movie" ? "movie" : "tv",
-            addedToFavourites: false,
+            addedToFavorites:
+              allFavorites && allFavorites.length
+                ? allFavorites.map((fav) => fav.movieID).indexOf(item.id) > -1
+                : false,
           }))
         );
       };
@@ -76,7 +86,7 @@ export default function DetailsPopup({ show, setShow }) {
 
   function handleClose() {
     setShow(false);
-    setcurrentMediaInfoIdandType(null)
+    setcurrentMediaInfoIdandType(null);
   }
 
   return (

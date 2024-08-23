@@ -5,7 +5,7 @@ import CommonLayout from "@/components/common-layout";
 import ManageAccounts from "@/components/manage-accounts";
 import Unauth from "@/components/unauth-page";
 import { GlobalContext } from "@/context";
-import { getTVorMoviesByGenre } from "@/utils";
+import { getAllFavorites, getTVorMoviesByGenre } from "@/utils";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useContext, useEffect } from "react";
@@ -23,7 +23,6 @@ export default function Tv() {
   const { data: session } = useSession();
   console.log(session);
 
-
   useEffect(() => {
     async function getAllMedias() {
       const actionAdventure = await getTVorMoviesByGenre("tv", 10759);
@@ -36,6 +35,10 @@ export default function Tv() {
       const war = await getTVorMoviesByGenre("tv", 10768);
       const western = await getTVorMoviesByGenre("tv", 37);
       const dramaMovies = await getTVorMoviesByGenre("tv", 18);
+      const allFavorites = await getAllFavorites(
+        session?.user?.uid,
+        loggedInAccount?._id
+      );
 
       setMediaData(
         [
@@ -84,7 +87,10 @@ export default function Tv() {
           medias: item.medias.map((mediaItem) => ({
             ...mediaItem,
             type: "tv",
-            addedToFavorites: false,
+            addedToFavorites:
+              allFavorites && allFavorites.length
+                ? allFavorites.map((fav) => fav.movieID).indexOf(mediaItem.id) > -1
+                : false,
           })),
         }))
       );

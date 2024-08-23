@@ -6,12 +6,14 @@ import ManageAccounts from "@/components/manage-accounts";
 import Unauth from "@/components/unauth-page";
 import { GlobalContext } from "@/context";
 import {
+  getAllFavorites,
   getPopularMedias,
   getTopratedMedias,
   getTrendingMedias,
 } from "@/utils";
 import { useSession } from "next-auth/react";
 import { useContext, useEffect } from "react";
+import { FaD } from "react-icons/fa6";
 
 export default function Browse() {
   // this state checks if the user is loggedin with pin
@@ -30,6 +32,10 @@ export default function Browse() {
       const trendingTvShows = await getTrendingMedias("tv");
       const popularTvShows = await getPopularMedias("tv");
       const topratedTvShows = await getTopratedMedias("tv");
+      const allFavorites = await getAllFavorites(
+        session?.user?.uid,
+        loggedInAccount?._id
+      );
 
       const trendingMovieShows = await getTrendingMedias("movie");
       const popularMovieShows = await getPopularMedias("movie");
@@ -53,6 +59,10 @@ export default function Browse() {
           medias: item.medias.map((mediaItem) => ({
             ...mediaItem,
             type: "tv",
+            addedToFavorites:
+              allFavorites && allFavorites.length
+                ? allFavorites.map((fav) => fav.movieID).indexOf(mediaItem.id) > -1
+                : false,
           })),
         })),
         ...[
@@ -73,6 +83,11 @@ export default function Browse() {
           medias: item.medias.map((mediaItem) => ({
             ...mediaItem,
             type: "tv",
+            addedToFavorites:
+              allFavorites && allFavorites.length
+                ? allFavorites.map((fav) => fav.movieID).indexOf(mediaItem.id) > -1
+                : false,
+
           })),
         })),
       ]);
@@ -82,17 +97,17 @@ export default function Browse() {
     getAllMedias();
   }, []);
 
-  if (!session) return <Unauth />;
+  if (session === null) return <Unauth />;
 
   // if there is no logged in account, return the Account page
   if (loggedInAccount === null) return <ManageAccounts />;
   if (pageLoader) return <CircleLoader />;
 
-  console.log(mediaData, "media data");
+  console.log(mediaData, "mediaData: browse");
 
   return (
     <main className="flex min-h-screen flex-col">
-      <CommonLayout mediaData = {mediaData}/>
+      <CommonLayout mediaData={mediaData} />
     </main>
   );
 }

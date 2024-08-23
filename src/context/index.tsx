@@ -11,13 +11,15 @@ export default function GlobalState({ children }: any) {
   const [accounts, setAccounts] = useState([]);
   const [pageLoader, setPageLoader] = useState(true);
   const [mediaData, setMediaData] = useState([]);
-  const [searchResult, setsearchResult] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
   const [mediaDetails, setMediaDetails] = useState(null)
   const [similarMedias, setSimilarMedias] = useState([])
 
   const [currentMediaInfoIdAndType, setcurrentMediaInfoIdandType] =
     useState(null); //this state changes when the down icon on the menuItem card is clicked.
   const [showDetailsPopup, setShowDetailsPopup] = useState(false)
+  const [favorites, setFavorites] = useState([]);
+
 
   const { data: session } = useSession();
 
@@ -38,13 +40,14 @@ export default function GlobalState({ children }: any) {
         setPageLoader,
         mediaData,
         setMediaData,
-        setsearchResult,
+        setSearchResult,
         searchResult,
         currentMediaInfoIdAndType,
         setcurrentMediaInfoIdandType,
         showDetailsPopup, setShowDetailsPopup,
         mediaDetails, setMediaDetails,
-        similarMedias, setSimilarMedias
+        similarMedias, setSimilarMedias,
+        favorites, setFavorites
 
       }}
     >

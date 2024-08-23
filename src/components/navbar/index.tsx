@@ -19,6 +19,7 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [showAccountPopup, setShowAccountPopup] = useState(false);
 
+
   const {
     setPageLoader,
     loggedInAccount,
@@ -26,8 +27,11 @@ export default function Navbar() {
     accounts,
     setAccounts,
     showDetailsPopup,
-    setShowDetailsPopup
+    setShowDetailsPopup,
   } = useContext(GlobalContext);
+
+
+
   const menuItems = [
     {
       id: "home",
@@ -47,7 +51,7 @@ export default function Navbar() {
     {
       id: "my-list",
       title: "My List",
-      path: "/mylist",
+      path: `/my-list/${session?.user?.uid}/${loggedInAccount?._id}`,
     },
   ];
 
@@ -157,7 +161,7 @@ export default function Navbar() {
           </div>
         </div>
       </header>
-      <DetailsPopup show={showDetailsPopup } setShow={setShowDetailsPopup}/>
+      <DetailsPopup show={showDetailsPopup} setShow={setShowDetailsPopup} />
       {showAccountPopup && (
         <AccountPopup
           accounts={accounts}

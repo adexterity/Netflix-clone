@@ -142,7 +142,6 @@ export const getTVorMovieSearchResult = async (type, query) => {
   }
 };
 
-
 export const getTVorMovieDetailsByID = async (type, id) => {
   try {
     const res = await fetch(
@@ -167,8 +166,6 @@ export const getTVorMovieDetailsByID = async (type, id) => {
   }
 };
 
-
-
 export const getSimilarTVorMovies = async (type, id) => {
   try {
     const res = await fetch(
@@ -189,6 +186,34 @@ export const getSimilarTVorMovies = async (type, id) => {
     console.log("failed to fetch tmdb data:", error);
     if (error.message === "Request timed out") {
       console.error("network timedout: ", error);
+    }
+  }
+};
+
+
+// GET FAVORITES
+
+export const getAllFavorites = async (uid, accountID) => {
+  try {
+    const res = await fetch(
+      `/api/favorites/get-all-favorites?id=${uid}&accountID=${accountID}`,
+      {
+        method: "GET",
+      }
+    );
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+    const data = await res.json();
+
+    console.log(data, "getAllFavorites: utils");
+
+    return data && data.data;
+  } catch (error) {
+    if (error.message === "Request timed out") {
+      console.error("network timedout: ", error);
+    }else{
+      console.log(error)
     }
   }
 };

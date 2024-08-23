@@ -4,7 +4,7 @@ import CommonLayout from "@/components/common-layout";
 import ManageAccounts from "@/components/manage-accounts";
 import Unauth from "@/components/unauth-page";
 import { GlobalContext } from "@/context";
-import { getTVorMoviesByGenre } from "@/utils";
+import { getAllFavorites, getTVorMoviesByGenre } from "@/utils";
 import { useSession } from "next-auth/react";
 import { useContext, useEffect } from "react";
 
@@ -37,6 +37,11 @@ export default function Movies() {
       const drama = await getTVorMoviesByGenre("movie", 18);
       const thriller = await getTVorMoviesByGenre("movie", 53);
       const horror = await getTVorMoviesByGenre("movie", 27);
+      const allFavorites = await getAllFavorites(
+        session?.user?.uid,
+        loggedInAccount?._id
+      );
+
 
       setMediaData(
         [
@@ -101,7 +106,9 @@ export default function Movies() {
           medias: item.medias.map((mediaItem) => ({
             ...mediaItem,
             type: "movie",
-            addedToFavorites: false,
+            addedToFavorites: allFavorites && allFavorites.length
+                ? allFavorites.map((fav) => fav.movieID).indexOf(mediaItem.id) > -1
+                : false,
           })),
         }))
       );
