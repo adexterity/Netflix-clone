@@ -15,6 +15,7 @@ const initialFormData = {
   pin: "",
 };
 
+
 export default function ManageAccounts() {
   // Using the useContext hook to access the GlobalContext
   const {
@@ -23,7 +24,7 @@ export default function ManageAccounts() {
     pageLoader,
     setPageLoader,
     setLoggedInAccount,
-  } = useContext(GlobalContext);
+  }  = useContext(GlobalContext);
   console.log(accounts, "accounts");
   //this state toggle the account signin form modal
   const [showAccountForm, setShowAccountForm] = useState(false);
@@ -103,6 +104,7 @@ export default function ManageAccounts() {
   }
 
   async function handlePinSubmit(value, index) {
+    setPageLoader(true)
     const response = await fetch(`/api/account/login-to-account`, {
       method: "POST",
       headers: {
