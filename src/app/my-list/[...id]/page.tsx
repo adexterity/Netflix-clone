@@ -44,10 +44,10 @@ export default function MyList() {
     extractFavorites();
   }, [loggedInAccount, totalFav]);
 
-
-
-
+  
+  //if no authentication, return the unath page
   if (session === null) return <Unauth />;
+  // if there is no logged in account, return the Account page
   if (loggedInAccount === null) return <ManageAccounts />;
 
   if (pageLoader) return <CircleLoader />;
@@ -66,11 +66,11 @@ export default function MyList() {
         <div className="grid grid-cols-5 gap-3 items-center scrollbar-hide md:p-2">
           {favorites && favorites.length
             ? favorites.map((favoriteItem) => (
-                  <MediaItem
-                    key={favoriteItem._id}
-                    media={favoriteItem}
-                    listView={true}
-                  />
+                <MediaItem
+                  key={favoriteItem._id}
+                  media={favoriteItem}
+                  listView={true}
+                />
               ))
             : "No favorites added"}
         </div>

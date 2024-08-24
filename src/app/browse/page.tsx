@@ -97,6 +97,7 @@ export default function Browse() {
     getAllMedias();
   }, []);
 
+  //if no authentication, return the unath page
   if (session === null) return <Unauth />;
 
   // if there is no logged in account, return the Account page
